@@ -26,6 +26,11 @@ func OrderedSRV(service, proto, name string) (int, []*net.SRV, error) {
 }
 
 func OrderSRV(addrs []*net.SRV) (int, []*net.SRV) {
+	// No need to process less than two records
+	if cnt := len(addrs); cnt < 2 {
+		return cnt, addrs
+	}
+
 	// Initialise the ordered map
 	osrv := make([]*net.SRV, 0, len(addrs))
 
