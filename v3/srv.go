@@ -57,6 +57,11 @@ func OrderSRV(addrs []*net.SRV) (int, []*net.SRV) {
 }
 
 func weightedOrder(srvs []*net.SRV) []*net.SRV {
+	// No need to process less than two records
+	if len(srvs) < 2 {
+		return srvs
+	}
+
 	// Get the total weight
 	var tw int
 	for _, s := range srvs {
